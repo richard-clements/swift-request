@@ -2,7 +2,7 @@ import Foundation
 
 extension URLRequest {
     
-    init(@RequestBuilder builder: () -> PartialRequest) throws {
+    public init(@RequestBuilder builder: () -> PartialRequest) throws {
         let builtRequest = builder()
         var components: URLComponents
         if let url = builtRequest.url, let cpts = URLComponents(url: url, resolvingAgainstBaseURL: false) {

@@ -1,33 +1,33 @@
 import Foundation
 
-struct Path: ExpressibleByStringLiteral {
+public struct Path: ExpressibleByStringLiteral {
     
     let rawValue: String
     
-    init(stringLiteral value: StringLiteralType) {
+    public init(stringLiteral value: StringLiteralType) {
         self.rawValue = value
     }
     
 }
 
-@_functionBuilder struct PathBuilder {
+@_functionBuilder public struct PathBuilder {
     
-    static func buildBlock(_ paths: Path...) -> [Path] {
+    public static func buildBlock(_ paths: Path...) -> [Path] {
         paths
     }
     
-    static func buildBlock(_ path: Path) -> [Path] {
+    public static func buildBlock(_ path: Path) -> [Path] {
         [path]
     }
     
-    static func buildIf(_ path: Path?) -> [Path] {
+    public static func buildIf(_ path: Path?) -> [Path] {
         path.map { [$0] } ?? []
     }
     
     
 }
 
-struct Paths {
+public struct Paths {
     
     let items: [Path]
     
@@ -35,154 +35,158 @@ struct Paths {
         self.items = paths
     }
     
-    init(@PathBuilder builder: () -> [Path]) {
+    public init(@PathBuilder builder: () -> [Path]) {
         items = builder()
     }
 }
 
 extension Path: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         "/" + rawValue
             .split(separator: "/")
             .filter { !$0.isEmpty }
             .joined(separator: "/")
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         nil
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
 }
 
 extension Paths: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         "/" + items
-            .map { $0.rawValue.replacingOccurrences(of: "/", with: "") }
+            .flatMap {
+                $0.rawValue
+                    .split(separator: "/")
+                    .filter { !$0.isEmpty }
+            }
             .joined(separator: "/")
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         nil
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
 }

@@ -1,14 +1,14 @@
 import Foundation
 
-struct Behaviour {
+public struct Behaviour {
     
-    let httpShouldHandleCookies: Bool?
-    let httpShouldUsePipelining: Bool?
-    let allowsCellularAccess: Bool?
-    let allowsConstrainedNetworkAccess: Bool?
-    let allowsExpensiveNetworkAccess: Bool?
+    public let httpShouldHandleCookies: Bool?
+    public let httpShouldUsePipelining: Bool?
+    public let allowsCellularAccess: Bool?
+    public let allowsConstrainedNetworkAccess: Bool?
+    public let allowsExpensiveNetworkAccess: Bool?
     
-    init(httpShouldHandleCookies: Bool? = nil, httpShouldUsePipelining: Bool? = nil, allowsCellularAccess: Bool? = nil, allowsConstrainedNetworkAccess: Bool? = nil, allowsExpensiveNetworkAccess: Bool? = nil) {
+    public init(httpShouldHandleCookies: Bool? = nil, httpShouldUsePipelining: Bool? = nil, allowsCellularAccess: Bool? = nil, allowsConstrainedNetworkAccess: Bool? = nil, allowsExpensiveNetworkAccess: Bool? = nil) {
         self.httpShouldHandleCookies = httpShouldHandleCookies
         self.httpShouldUsePipelining = httpShouldUsePipelining
         self.allowsCellularAccess = allowsCellularAccess
@@ -20,51 +20,51 @@ struct Behaviour {
 
 extension Behaviour: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         nil
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         nil
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
     

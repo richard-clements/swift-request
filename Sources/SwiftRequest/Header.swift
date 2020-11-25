@@ -1,64 +1,69 @@
 import Foundation
 
-struct Header {
-    struct Name: ExpressibleByStringLiteral {
+public struct Header {
+    public struct Name: ExpressibleByStringLiteral {
         let rawValue: String
         
-        init(_ value: String) {
+        public init(_ value: String) {
             self.rawValue = value
         }
         
-        init(stringLiteral value: StringLiteralType) {
+        public init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
     }
     
-    struct Value: ExpressibleByStringLiteral {
+    public struct Value: ExpressibleByStringLiteral {
         let rawValue: StringLiteralType
         
-        init(_ value: String) {
+        public init(_ value: String) {
             self.rawValue = value
         }
         
-        init(stringLiteral value: StringLiteralType) {
+        public init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
     }
     
     let name: Name
     let value: Value
+    
+    public init(name: Name, value: Value) {
+        self.name = name
+        self.value = value
+    }
 }
 
 extension Header {
     
-    init(name: String, value: String) {
+    public init(name: String, value: String) {
         self.init(name: Name(name), value: Value(value))
     }
     
-    init(name: Name, value: String) {
+    public init(name: Name, value: String) {
         self.init(name: name, value: Value(value))
     }
     
-    init(name: String, value: Value) {
+    public init(name: String, value: Value) {
         self.init(name: Name(name), value: value)
     }
     
 }
 
-struct Headers {
+public struct Headers {
     
     private let items: [Header]
     
-    @_functionBuilder struct HeaderBuilder {
-        static func buildBlock(_ headers: Header...) -> Headers {
+    @_functionBuilder public struct HeaderBuilder {
+        public static func buildBlock(_ headers: Header...) -> Headers {
             Headers(headers)
         }
         
-        static func buildBlock(_ header: Header) -> Headers {
+        public static func buildBlock(_ header: Header) -> Headers {
             Headers([header])
         }
         
-        static func buildIf(_ header: Header?) -> Headers {
+        public static func buildIf(_ header: Header?) -> Headers {
             if let header = header {
                 return Headers([header])
             } else {
@@ -67,11 +72,11 @@ struct Headers {
         }
     }
     
-    init(_ headers: [Header]) {
+    public init(_ headers: [Header]) {
         self.items = headers
     }
     
-    init(@HeaderBuilder builder: () -> Headers) {
+    public init(@HeaderBuilder builder: () -> Headers) {
         self = builder()
     }
     
@@ -79,142 +84,142 @@ struct Headers {
 
 extension Header: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         nil
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         [self]
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
 }
 
 extension Headers: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         nil
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         items
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
 }

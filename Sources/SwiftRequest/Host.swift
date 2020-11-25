@@ -1,18 +1,18 @@
 import Foundation
 
-struct Host {
+public struct Host {
     
-    struct Value: ExpressibleByStringLiteral {
+    public struct Value: ExpressibleByStringLiteral {
         fileprivate let rawValue: String
         
-        init(stringLiteral value: StringLiteralType) {
+        public init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
     }
     
     private let rawValue: Value
     
-    init(_ rawValue: Value) {
+    public init(_ rawValue: Value) {
         self.rawValue = rawValue
     }
     
@@ -20,71 +20,71 @@ struct Host {
 
 extension Host: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         rawValue.rawValue
     }
     
-    var path: String? {
+    public var path: String? {
         nil
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         nil
     }
     
-    var body: Body? {
+    public var body: Body? {
         nil
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
     

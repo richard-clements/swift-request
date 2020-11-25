@@ -131,71 +131,71 @@ extension Body {
 
 extension Body: PartialRequest {
     
-    var url: URL? {
+    public var url: URL? {
         nil
     }
     
-    var scheme: String? {
+    public var scheme: String? {
         nil
     }
     
-    var host: String? {
+    public var host: String? {
         nil
     }
     
-    var path: String? {
+    public var path: String? {
         nil
     }
     
-    var method: String? {
+    public var method: String? {
         nil
     }
     
-    var cachePolicy: URLRequest.CachePolicy? {
+    public var cachePolicy: URLRequest.CachePolicy? {
         nil
     }
     
-    var timeoutInterval: TimeInterval? {
+    public var timeoutInterval: TimeInterval? {
         nil
     }
     
-    var query: [Query]? {
+    public var query: [Query]? {
         nil
     }
     
-    var headers: [Header]? {
+    public var headers: [Header]? {
         nil
     }
     
-    var body: Body? {
+    public var body: Body? {
         self
     }
     
-    var bodyStream: InputStream? {
+    public var bodyStream: InputStream? {
         nil
     }
     
-    var httpShouldHandleCookies: Bool? {
+    public var httpShouldHandleCookies: Bool? {
         nil
     }
     
-    var httpShouldUsePipelining: Bool? {
+    public var httpShouldUsePipelining: Bool? {
         nil
     }
     
-    var allowsCellularAccess: Bool? {
+    public var allowsCellularAccess: Bool? {
         nil
     }
     
-    var allowsConstrainedNetworkAccess: Bool? {
+    public var allowsConstrainedNetworkAccess: Bool? {
         nil
     }
     
-    var allowsExpensiveNetworkAccess: Bool? {
+    public var allowsExpensiveNetworkAccess: Bool? {
         nil
     }
     
-    var networkServiceType: URLRequest.NetworkServiceType? {
+    public var networkServiceType: URLRequest.NetworkServiceType? {
         nil
     }
 }

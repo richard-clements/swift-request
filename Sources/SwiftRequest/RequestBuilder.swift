@@ -1,6 +1,6 @@
 import Foundation
 
-protocol PartialRequest {
+public protocol PartialRequest {
     var url: URL? { get }
     var scheme: String? { get }
     var host: String? { get }
@@ -79,9 +79,9 @@ extension Array where Element == PartialRequest {
     
 }
 
-@_functionBuilder struct RequestBuilder {
+@_functionBuilder public struct RequestBuilder {
     
-    static func buildBlock(_ partialRequest: PartialRequest...) -> PartialRequest {
+    public static func buildBlock(_ partialRequest: PartialRequest...) -> PartialRequest {
         let url = partialRequest.reduce(forKey: \.url)
         let scheme = partialRequest.reduce(forKey: \.scheme)
         let host = partialRequest.reduce(forKey: \.host)
@@ -102,11 +102,11 @@ extension Array where Element == PartialRequest {
         return FullRequest(url: url, scheme: scheme, host: host, path: path, method: method, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval, query: query, headers: headers, body: body, bodyStream: bodyStream, httpShouldUsePipelining: httpShouldUsePipelining, httpShouldHandleCookies: httpShouldHandleCookies, allowsCellularAccess: allowsCellularAccess, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess, allowsExpensiveNetworkAccess: allowsExpensiveNetworkAccess, networkServiceType: serviceType)
     }
     
-    static func buildBlock(_ partialRequest: PartialRequest) -> PartialRequest {
+    public static func buildBlock(_ partialRequest: PartialRequest) -> PartialRequest {
         partialRequest
     }
     
-    static func buildIf(_ partialRequest: PartialRequest?) -> PartialRequest {
+    public static func buildIf(_ partialRequest: PartialRequest?) -> PartialRequest {
         partialRequest ?? EmptyRequest()
     }
     
