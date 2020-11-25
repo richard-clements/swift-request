@@ -4,6 +4,10 @@ struct Header {
     struct Name: ExpressibleByStringLiteral {
         let rawValue: String
         
+        init(_ value: String) {
+            self.rawValue = value
+        }
+        
         init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
@@ -12,6 +16,10 @@ struct Header {
     struct Value: ExpressibleByStringLiteral {
         let rawValue: StringLiteralType
         
+        init(_ value: String) {
+            self.rawValue = value
+        }
+        
         init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
@@ -19,6 +27,22 @@ struct Header {
     
     let name: Name
     let value: Value
+}
+
+extension Header {
+    
+    init(name: String, value: String) {
+        self.init(name: Name(name), value: Value(value))
+    }
+    
+    init(name: Name, value: String) {
+        self.init(name: name, value: Value(value))
+    }
+    
+    init(name: String, value: Value) {
+        self.init(name: Name(name), value: value)
+    }
+    
 }
 
 struct Headers {

@@ -1,0 +1,43 @@
+import Foundation
+
+extension Header.Name {
+    static let accept: Self = "Accept"
+    static let contentLength: Self = "Content-Length"
+    static let connection: Self = "Connection"
+    static let host: Self = "Host"
+    static let proxyAuthenticate: Self = "Proxy-Authenticate"
+    static let proxyAuthorization: Self = "Proxy-Authorization"
+    static let authorization: Self = "Authorization"
+    static let wwwAuthenticate: Self = "WWW-Authenticate"
+    static let ifMatch: Self = "If-Match"
+    static let ifNoneMatch: Self = "If-None-Match"
+    static let ifModifiedSince: Self = "If-Modified-Since"
+    static let ifUnmodifiedSince: Self = "If-Unmodified-Since"
+    static let expect: Self = "Expect"
+    static let contentType: Self = "Content-Type"
+    static let acceptRanges: Self = "Accept-Ranges"
+    static let range: Self = "Range"
+    static let ifRange: Self = "If-Range"
+    static let contentRage: Self = "Content-Rage"
+}
+
+struct MimeType {
+    static let aacAudio = "audio/aac"
+    static let css = "text/css"
+    static let csv = "text/csv"
+    static let gzip = "application/gzip"
+    static let gif = "image/gif"
+    static let html = "text/html"
+    static let jpeg = "image/jpeg"
+    static let javascript = "text/javascript"
+    static let json = "application/json"
+    static let mp3Audio = "audio/mpeg"
+    static let mpegVideo = "video/mpeg"
+    static let oggAudio = "audio/ogg"
+    static let oggVideo = "video/ogg"
+    static let ogg = "application/ogg"
+    static let openTypeFont = "font/otf"
+    static let png = "image/png"
+    static let pdf = "application/pdf"
+    static let zip = "application/zip"
+}

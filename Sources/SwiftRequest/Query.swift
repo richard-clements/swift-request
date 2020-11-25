@@ -11,6 +11,10 @@ struct Query {
     struct Name: ExpressibleByStringLiteral {
         let rawValue: String
         
+        init(_ value: String) {
+            self.rawValue = value
+        }
+        
         init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
@@ -19,6 +23,10 @@ struct Query {
     struct Value: ExpressibleByStringLiteral {
         let rawValue: String
         
+        init(_ value: String) {
+            self.rawValue = value
+        }
+        
         init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
@@ -26,6 +34,22 @@ struct Query {
     
     let name: Name
     let value: Value
+}
+
+extension Query {
+    
+    init(name: String, value: String) {
+        self.init(name: Name(name), value: Value(value))
+    }
+    
+    init(name: Name, value: String) {
+        self.init(name: name, value: Value(value))
+    }
+    
+    init(name: String, value: Value) {
+        self.init(name: Name(name), value: value)
+    }
+    
 }
 
 struct Queries {
