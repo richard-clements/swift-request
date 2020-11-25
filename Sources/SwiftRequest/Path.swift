@@ -6,15 +6,11 @@ public protocol PathProtocol {
     
 }
 
-public struct Path: ExpressibleByStringLiteral, Equatable {
+public struct Path: Equatable {
     
     let rawValue: String
     
     public init(_ value: String) {
-        self.rawValue = value
-    }
-    
-    public init(stringLiteral value: StringLiteralType) {
         self.rawValue = value
     }
     
