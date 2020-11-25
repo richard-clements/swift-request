@@ -91,7 +91,7 @@ public struct Json<T: Encodable> {
 
 public struct Body {
     
-    let dataFunction: (String...) -> Data
+    let dataFunction: (String...) -> Data?
     
 }
 
@@ -101,7 +101,7 @@ extension Body {
         let component = builder()
         self.init { (arguments: String...) in
             guard let boundary = arguments.first, !component.children.isEmpty else {
-                return Data()
+                return nil
             }
             
             func formPart(name: String, value: Data) -> Data {
@@ -113,7 +113,7 @@ extension Body {
             var data = Data(
                 component.children
                     .map { formPart(name: $0.name, value: $0.value) }
-                    .joined(separator: "\n".data(using: .utf8)!)
+                    .joined(separator: "\r\n".data(using: .utf8)!)
             )
             data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
             return data

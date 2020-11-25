@@ -43,7 +43,12 @@ extension URLRequest {
                 request.addValue($0.value.rawValue, forHTTPHeaderField: $0.name.rawValue)
             }
         }
-        request.httpBody = builtRequest.body?.dataFunction(boundary)
+        if let bodyStream = builtRequest.bodyStream {
+            request.httpBodyStream = bodyStream
+        } else if let body = builtRequest.body?.dataFunction(boundary) {
+            request.httpBody = body
+        }
+        
         self = request
     }
     

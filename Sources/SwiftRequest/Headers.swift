@@ -18,7 +18,7 @@ extension Header.Name {
     public static let acceptRanges: Self = "Accept-Ranges"
     public static let range: Self = "Range"
     public static let ifRange: Self = "If-Range"
-    public static let contentRage: Self = "Content-Rage"
+    public static let contentRange: Self = "Content-Range"
 }
 
 struct MimeType {

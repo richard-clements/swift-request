@@ -7,8 +7,8 @@
 
 import Foundation
 
-public struct Query {
-    public struct Name: ExpressibleByStringLiteral {
+public struct Query: Equatable {
+    public struct Name: ExpressibleByStringLiteral, Equatable {
         let rawValue: String
         
         public init(_ value: String) {
@@ -20,7 +20,7 @@ public struct Query {
         }
     }
     
-    public struct Value: ExpressibleByStringLiteral {
+    public struct Value: ExpressibleByStringLiteral, Equatable {
         let rawValue: String
         
         public init(_ value: String) {
@@ -57,7 +57,7 @@ extension Query {
     
 }
 
-public struct Queries {
+public struct Queries: Equatable {
     
     let queries: [Query]
     

@@ -1,7 +1,7 @@
 import Foundation
 
-public struct Header {
-    public struct Name: ExpressibleByStringLiteral {
+public struct Header: Equatable {
+    public struct Name: ExpressibleByStringLiteral, Equatable {
         let rawValue: String
         
         public init(_ value: String) {
@@ -13,7 +13,7 @@ public struct Header {
         }
     }
     
-    public struct Value: ExpressibleByStringLiteral {
+    public struct Value: ExpressibleByStringLiteral, Equatable {
         let rawValue: StringLiteralType
         
         public init(_ value: String) {
@@ -50,7 +50,7 @@ extension Header {
     
 }
 
-public struct Headers {
+public struct Headers: Equatable {
     
     private let items: [Header]
     

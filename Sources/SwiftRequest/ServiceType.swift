@@ -77,7 +77,7 @@ extension ServiceType: PartialRequest {
     }
     
     public var networkServiceType: URLRequest.NetworkServiceType? {
-        nil
+        service
     }
     
 }
