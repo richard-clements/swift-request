@@ -43,7 +43,14 @@ class HeadersTests: XCTestCase {
         XCTAssertEqual(MimeType.png, "image/png")
         XCTAssertEqual(MimeType.pdf, "application/pdf")
         XCTAssertEqual(MimeType.zip, "application/zip")
-        
+    }
+    
+    func testBearerToken() {
+        XCTAssertEqual(Header.Value.bearer(token: "token"), "Bearer token")
+    }
+    
+    func testBasicAuth() {
+        XCTAssertEqual(Header.Value.basicAuth(username: "username", password: "password"), "dXNlcm5hbWU6cGFzc3dvcmQ=")
     }
     
 }
@@ -52,7 +59,9 @@ extension HeadersTests {
     
     static var allTests = [
         ("testNames", testNames),
-        ("testMimes", testMimes)
+        ("testMimes", testMimes),
+        ("testBearerToken", testBearerToken),
+        ("testBasicAuth", testBasicAuth)
     ]
     
 }

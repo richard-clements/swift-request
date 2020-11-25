@@ -41,3 +41,18 @@ struct MimeType {
     public static let pdf = "application/pdf"
     public static let zip = "application/zip"
 }
+
+extension Header.Value {
+    
+    static func bearer(token: String) -> Self {
+        Self("Bearer \(token)")
+    }
+    
+    static func basicAuth(username: String, password: String) -> Self {
+        "\(username):\(password)"
+            .data(using: .utf8)
+            .map { $0.base64EncodedString() }
+            .map { Self($0) } ?? ""
+    }
+    
+}
