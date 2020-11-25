@@ -114,13 +114,34 @@ class QueryTests: XCTestCase {
         XCTAssertNil(queries.networkServiceType)
     }
     
+    func testIf() {
+        var someOptional: String?
+        var queries = Queries {
+            if let someOptional = someOptional {
+                Query(name: "item1", value: someOptional)
+            }
+        }
+        XCTAssertEqual(queries.items, [])
+        
+        someOptional = "someValue"
+        queries = Queries {
+            if let someOptional = someOptional {
+                Query(name: "item1", value: someOptional)
+            }
+        }
+        XCTAssertEqual(queries.items, [
+            Query(name: "item1", value: "someValue")
+        ])
+    }
+    
 }
 
 extension QueryTests {
     
     static var allTests = [
         ("testInit", testInit),
-        ("testInitQueries", testInitQueries)
+        ("testInitQueries", testInitQueries),
+        ("testIf", testIf)
     ]
     
 }

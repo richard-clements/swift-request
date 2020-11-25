@@ -1,11 +1,8 @@
-//
-//  File.swift
-//  
-//
-//  Created by Richard Clements on 24/11/2020.
-//
-
 import Foundation
+
+public protocol QueryProtocol {
+    var items: [Query] { get }
+}
 
 public struct Query: Equatable {
     public struct Name: ExpressibleByStringLiteral, Equatable {
@@ -57,34 +54,38 @@ extension Query {
     
 }
 
-public struct Queries: Equatable {
+extension Query: QueryProtocol {
     
-    let queries: [Query]
+    public var items: [Query] {
+        [self]
+    }
+    
+}
+
+public struct Queries: Equatable, QueryProtocol {
+    
+    public let items: [Query]
     
     @_functionBuilder public struct QueryBuilder {
-        public static func buildBlock(_ queries: Query...) -> Queries {
-            Queries(queries)
+        public static func buildBlock(_ queries: QueryProtocol...) -> QueryProtocol {
+            Queries(queries.flatMap { $0.items })
         }
         
-        public static func buildBlock(_ query: Query) -> Queries {
-            Queries([query])
+        public static func buildBlock(_ query: QueryProtocol) -> QueryProtocol {
+            Queries(query.items)
         }
         
-        public static func buildIf(_ query: Query?) -> Queries {
-            if let query = query {
-                return Queries([query])
-            } else {
-                return Queries([])
-            }
+        public static func buildIf(_ query: QueryProtocol?) -> QueryProtocol {
+            query.map { Queries($0.items) } ?? Queries([])
         }
     }
     
     private init(_ queries: [Query]) {
-        self.queries = queries
+        self.items = queries
     }
     
-    public init(@QueryBuilder builder: () -> Queries) {
-        self = builder()
+    public init(@QueryBuilder builder: () -> QueryProtocol) {
+        self.init(builder().items)
     }
     
 }
@@ -120,7 +121,7 @@ extension Query: PartialRequest {
     }
     
     public var query: [Query]? {
-        [self]
+        items
     }
     
     public var headers: [Header]? {
@@ -191,7 +192,7 @@ extension Queries: PartialRequest {
     }
     
     public var query: [Query]? {
-        queries
+        items
     }
     
     public var headers: [Header]? {

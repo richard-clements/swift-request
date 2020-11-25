@@ -114,13 +114,33 @@ class HeaderTests: XCTestCase {
         XCTAssertNil(headers.networkServiceType)
     }
     
+    func testIf() {
+        var someOptional: String?
+        var headers = Headers {
+            if let someOptional = someOptional {
+                Header(name: "item1", value: someOptional)
+            }
+        }
+        XCTAssertEqual(headers.items, [])
+        
+        someOptional = "someValue"
+        headers = Headers {
+            if let someOptional = someOptional {
+                Header(name: "item1", value: someOptional)
+            }
+        }
+        XCTAssertEqual(headers.items, [
+            Header(name: "item1", value: "someValue")
+        ])
+    }
 }
 
 extension HeaderTests {
     
     static var allTests = [
         ("testInit", testInit),
-        ("testInitHeaders", testInitHeaders)
+        ("testInitHeaders", testInitHeaders),
+        ("testIf", testIf)
     ]
     
 }

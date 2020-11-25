@@ -1,5 +1,9 @@
 import Foundation
 
+public protocol HeaderProtocol {
+    var items: [Header] { get }
+}
+
 public struct Header: Equatable {
     public struct Name: ExpressibleByStringLiteral, Equatable {
         let rawValue: String
@@ -50,34 +54,38 @@ extension Header {
     
 }
 
-public struct Headers: Equatable {
+extension Header: HeaderProtocol {
     
-    private let items: [Header]
+    public var items: [Header] {
+        [self]
+    }
+    
+}
+
+public struct Headers: Equatable, HeaderProtocol {
+    
+    public let items: [Header]
     
     @_functionBuilder public struct HeaderBuilder {
-        public static func buildBlock(_ headers: Header...) -> Headers {
-            Headers(headers)
+        public static func buildBlock(_ headers: HeaderProtocol...) -> HeaderProtocol {
+            Headers(headers.flatMap { $0.items })
         }
         
-        public static func buildBlock(_ header: Header) -> Headers {
-            Headers([header])
+        public static func buildBlock(_ header: HeaderProtocol) -> HeaderProtocol {
+            Headers(header.items)
         }
         
-        public static func buildIf(_ header: Header?) -> Headers {
-            if let header = header {
-                return Headers([header])
-            } else {
-                return Headers([])
-            }
+        public static func buildIf(_ header: HeaderProtocol?) -> HeaderProtocol {
+            header.map { Headers($0.items) } ?? Headers([])
         }
     }
     
-    public init(_ headers: [Header]) {
+    private init(_ headers: [Header]) {
         self.items = headers
     }
     
-    public init(@HeaderBuilder builder: () -> Headers) {
-        self = builder()
+    public init(@HeaderBuilder builder: () -> HeaderProtocol) {
+        self.init(builder().items)
     }
     
 }

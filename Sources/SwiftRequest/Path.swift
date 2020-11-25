@@ -1,8 +1,18 @@
 import Foundation
 
-public struct Path: ExpressibleByStringLiteral {
+public protocol PathProtocol {
+    
+    var items: [Path] { get }
+    
+}
+
+public struct Path: ExpressibleByStringLiteral, Equatable {
     
     let rawValue: String
+    
+    public init(_ value: String) {
+        self.rawValue = value
+    }
     
     public init(stringLiteral value: StringLiteralType) {
         self.rawValue = value
@@ -10,33 +20,41 @@ public struct Path: ExpressibleByStringLiteral {
     
 }
 
+extension Path: PathProtocol {
+    
+    public var items: [Path] {
+        [self]
+    }
+    
+}
+
 @_functionBuilder public struct PathBuilder {
     
-    public static func buildBlock(_ paths: Path...) -> [Path] {
-        paths
+    public static func buildBlock(_ paths: PathProtocol...) -> PathProtocol {
+        Paths(paths.flatMap { $0.items })
     }
     
-    public static func buildBlock(_ path: Path) -> [Path] {
-        [path]
+    public static func buildBlock(_ path: PathProtocol) -> PathProtocol {
+        Paths(path.items)
     }
     
-    public static func buildIf(_ path: Path?) -> [Path] {
-        path.map { [$0] } ?? []
+    public static func buildIf(_ path: PathProtocol?) -> PathProtocol {
+        path.map { Paths($0.items) } ?? Paths([])
     }
     
     
 }
 
-public struct Paths {
+public struct Paths: PathProtocol, Equatable {
     
-    let items: [Path]
+    public let items: [Path]
     
     init(_ paths: [Path]) {
         self.items = paths
     }
     
-    public init(@PathBuilder builder: () -> [Path]) {
-        items = builder()
+    public init(@PathBuilder builder: () -> PathProtocol) {
+        self.init(builder().items)
     }
 }
 

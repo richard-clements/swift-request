@@ -3,14 +3,13 @@ import Foundation
 public protocol PartialFormData {
     var name: String { get }
     var value: Data { get }
-    var children: [PartialFormData]? { get }
+    var children: [PartialFormData] { get }
 }
 
 public struct MultipartFormData: PartialFormData {
     
     public let name: String
     public let value: Data
-    public let children: [PartialFormData]? = nil
     
     public init(name: String, value: String) {
         self.name = name
@@ -21,13 +20,17 @@ public struct MultipartFormData: PartialFormData {
         self.name = name
         self.value = value
     }
+    
+    public var children: [PartialFormData] {
+        [self]
+    }
 }
 
 struct CombinedRequestFormData: PartialFormData {
     
     let name: String = ""
     let value: Data = Data()
-    let children: [PartialFormData]?
+    let children: [PartialFormData]
     
     init(children: [PartialFormData]) {
         self.children = children
@@ -39,7 +42,7 @@ struct CombinedRequestFormData: PartialFormData {
 public struct FormDataBuilder {
     
     public static func buildBlock(_ formData: PartialFormData...) -> PartialFormData {
-        let allFormData = formData.filter { $0.children == nil } + formData.compactMap { $0.children }.flatMap { $0 }
+        let allFormData = formData.flatMap { $0.children }
         return CombinedRequestFormData(children: allFormData)
     }
     
@@ -48,30 +51,17 @@ public struct FormDataBuilder {
     }
     
     public static func buildIf(_ formData: PartialFormData?) -> PartialFormData {
-        if let formData = formData {
-            return formData
-        } else {
-            return CombinedRequestFormData(children: [])
-        }
+        formData.map { $0 } ?? CombinedRequestFormData(children: [])
     }
     
 }
 
-public struct MultipartForm: CustomStringConvertible {
+public struct MultipartForm {
     
     let children: [PartialFormData]
     
     public init(@FormDataBuilder builder: () -> PartialFormData) {
-        let formData = builder()
-        if formData.children == nil {
-            children = [formData]
-        } else {
-            children = formData.children ?? []
-        }
-    }
-    
-    public var description: String {
-        return children.map { "\($0.name): \($0.value)" }.joined(separator: "\n")
+        self.children = builder().children
     }
 }
 
@@ -123,7 +113,7 @@ extension Body {
     public init<T: Encodable>(builder: () -> Json<T>) {
         let component = builder()
         self.init { (args: String...) in
-            (try? JSONEncoder().encode(component.data)) ?? Data()
+            try! JSONEncoder().encode(component.data)
         }
     }
     

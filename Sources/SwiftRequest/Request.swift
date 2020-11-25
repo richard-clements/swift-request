@@ -17,13 +17,8 @@ extension URLRequest {
         }
         components.path = builtRequest.path ?? ""
         components.queryItems = builtRequest.query?.map { URLQueryItem(name: $0.name.rawValue, value: $0.value.rawValue) }
-        
-        guard let url = components.url else {
-            throw URLError(URLError.Code.badURL)
-        }
-        
         let boundary = UUID().uuidString
-        var request = URLRequest(url: url)
+        var request = URLRequest(url: components.url!)
         request.httpMethod = builtRequest.method
         request.cachePolicy = builtRequest.cachePolicy ?? request.cachePolicy
         request.httpShouldUsePipelining = builtRequest.httpShouldUsePipelining ?? request.httpShouldUsePipelining

@@ -1,7 +1,7 @@
 import XCTest
 @testable import SwiftRequest
 
-class CachePolicyTests: XCTest {
+class CachePolicyTests: XCTestCase {
     
     func testInit() {
         let policies = [
@@ -20,7 +20,6 @@ class CachePolicyTests: XCTest {
             XCTAssertNil(CachePolicy(policy).host)
             XCTAssertNil(CachePolicy(policy).path)
             XCTAssertNil(CachePolicy(policy).method)
-            XCTAssertNil(CachePolicy(policy).cachePolicy)
             XCTAssertNil(CachePolicy(policy).timeoutInterval)
             XCTAssertNil(CachePolicy(policy).query)
             XCTAssertNil(CachePolicy(policy).headers)

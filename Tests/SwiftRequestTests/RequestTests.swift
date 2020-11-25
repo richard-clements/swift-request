@@ -250,6 +250,16 @@ class RequestTests: XCTestCase {
         XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-2"), "Value 2")
     }
     
+    func testInsertHeaders_Separated() {
+        let request = try? URLRequest {
+            Header(name: "Name-1", value: "Value 1")
+            BaseUrl("https://www.test.com")
+            Header(name: "Name-2", value: "Value 2")
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-1"), "Value 1")
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-2"), "Value 2")
+    }
+    
     func testMultipartFormHeader_AddsBoundary_IsUnique() {
         let request = try? URLRequest {
             BaseUrl("https://www.test.com")
@@ -284,6 +294,26 @@ class RequestTests: XCTestCase {
         }
         XCTAssertEqual(request?.httpBody, body.dataFunction())
     }
+    
+    func testIf() {
+        var showHeader = false
+        var request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            if showHeader {
+                Header(name: "name-1", value: "value 1")
+            }
+        }
+        XCTAssertNil(request?.value(forHTTPHeaderField: "name-1"))
+        
+        showHeader = true
+        request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            if showHeader {
+                Header(name: "name-1", value: "value 1")
+            }
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "name-1"), "value 1")
+    }
 }
 
 extension RequestTests {
@@ -307,9 +337,11 @@ extension RequestTests {
         ("testNetworkServiceType", testNetworkServiceType),
         ("testHeaders", testHeaders),
         ("testHeader", testHeader),
+        ("testInsertHeaders_Separated", testInsertHeaders_Separated),
         ("testMultipartFormHeader_AddsBoundary_IsUnique", testMultipartFormHeader_AddsBoundary_IsUnique),
         ("testBodyStream", testBodyStream),
-        ("testBody", testBody)
+        ("testBody", testBody),
+        ("testIf", testIf)
     ]
     
 }
