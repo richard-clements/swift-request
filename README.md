@@ -1,5 +1,7 @@
 # SwiftRequest
 
+![Swift](https://github.com/richard-clements/swift-request/workflows/Swift/badge.svg)
+
 This library allows you to create `URLRequest` objects in a more declarative way, using function builders. E.g.
 ```
 let request = try? URLRequest {
