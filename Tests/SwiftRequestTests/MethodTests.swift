@@ -34,12 +34,25 @@ class MethodTests: XCTestCase {
         }
     }
     
+    func testVerbs() {
+        XCTAssertEqual(Method(.get).rawValue, "GET")
+        XCTAssertEqual(Method(.put).rawValue, "PUT")
+        XCTAssertEqual(Method(.post).rawValue, "POST")
+        XCTAssertEqual(Method(.patch).rawValue, "PATCH")
+        XCTAssertEqual(Method(.delete).rawValue, "DELETE")
+        XCTAssertEqual(Method(.connect).rawValue, "CONNECT")
+        XCTAssertEqual(Method(.trace).rawValue, "TRACE")
+        XCTAssertEqual(Method(.options).rawValue, "OPTIONS")
+        XCTAssertEqual(Method(.head).rawValue, "HEAD")
+    }
+    
 }
 
 extension MethodTests {
     
     static var allTests = [
-        ("testInit", testInit)
+        ("testInit", testInit),
+        ("testVerbs", testVerbs)
     ]
     
 }

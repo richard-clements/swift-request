@@ -2,12 +2,22 @@ import Foundation
 
 public struct Method {
     
-    public enum Verb: String {
-        case get = "GET"
-        case patch = "PATCH"
-        case post = "POST"
-        case put = "PUT"
-        case delete = "DELETE"
+    public struct Verb: ExpressibleByStringLiteral {
+        public static let get: Self = "GET"
+        public static let patch: Self = "PATCH"
+        public static let post: Self = "POST"
+        public static let put: Self = "PUT"
+        public static let delete: Self = "DELETE"
+        public static let head: Self = "HEAD"
+        public static let options: Self = "OPTIONS"
+        public static let connect: Self = "CONNECT"
+        public static let trace: Self = "TRACE"
+        
+        let rawValue: String
+        
+        public init(stringLiteral value: StringLiteralType) {
+            self.rawValue = value
+        }
     }
     
     let rawValue: String
