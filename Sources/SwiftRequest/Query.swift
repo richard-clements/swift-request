@@ -62,6 +62,36 @@ extension Query: QueryProtocol {
     
 }
 
+public struct ListQuery: Equatable, QueryProtocol {
+    
+    public let items: [Query]
+    
+    public init(name: Query.Name, values: Query.Value...) {
+        items = values.map { Query(name: name, value: $0)}
+    }
+    
+    public init(name: String, values: Query.Value...) {
+        self.init(name: Query.Name(name), values: values)
+    }
+    
+    public init(name: Query.Name, values: String...) {
+        self.init(name: name, values: values.map { Query.Value($0) })
+    }
+    
+    public init(name: Query.Name, values: [Query.Value]) {
+        items = values.map { Query(name: name, value: $0) }
+    }
+    
+    public init(name: String, values: [Query.Value]) {
+        self.init(name: Query.Name(name), values: values)
+    }
+    
+    public init(name: Query.Name, values: [String]) {
+        self.init(name: name, values: values.map { Query.Value($0) })
+    }
+    
+}
+
 public struct Queries: Equatable, QueryProtocol {
     
     public let items: [Query]

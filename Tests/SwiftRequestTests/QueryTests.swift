@@ -114,6 +114,54 @@ class QueryTests: XCTestCase {
         XCTAssertNil(queries.networkServiceType)
     }
     
+    func testListQuery_NameValues() {
+        let query = ListQuery(name: Query.Name("name1"), values: Query.Value("value1"), Query.Value("value2"))
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_StringValues() {
+        let query = ListQuery(name: String("name1"), values: Query.Value("value1"), Query.Value("value2"))
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_NameStrings() {
+        let query = ListQuery(name: Query.Name("name1"), values: String("value1"), String("value2"))
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_NameValuesList() {
+        let query = ListQuery(name: Query.Name("name1"), values: [Query.Value("value1"), Query.Value("value2")])
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_StringValuesList() {
+        let query = ListQuery(name: String("name1"), values: [Query.Value("value1"), Query.Value("value2")])
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_NameStringsList() {
+        let query = ListQuery(name: Query.Name("name1"), values: [String("value1"), String("value2")])
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
     func testIf() {
         var someOptional: String?
         var queries = Queries {
