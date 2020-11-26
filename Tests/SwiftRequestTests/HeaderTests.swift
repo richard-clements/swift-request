@@ -155,6 +155,9 @@ extension HeaderTests {
     static var allTests = [
         ("testInit", testInit),
         ("testInitHeaders", testInitHeaders),
+        ("testReplaceDefault", testReplaceDefault),
+        ("testReplaceTrue", testReplaceTrue),
+        ("testReplaceFalse", testReplaceFalse),
         ("testIf", testIf)
     ]
     

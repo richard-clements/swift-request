@@ -245,7 +245,23 @@ extension QueryTests {
     static var allTests = [
         ("testInit", testInit),
         ("testInitQueries", testInitQueries),
-        ("testIf", testIf)
+        ("testIf", testIf),
+        ("testCsvQuery_NameValues", testCsvQuery_NameValues),
+        ("testCsvQuery_NameStrings", testCsvQuery_NameStrings),
+        ("testCsvQuery_StringValues", testCsvQuery_StringValues),
+        ("testCsvQuery_StringStrings", testCsvQuery_StringStrings),
+        ("testCsvQuery_NameValuesList", testCsvQuery_NameValuesList),
+        ("testCsvQuery_NameStringsList", testCsvQuery_NameStringsList),
+        ("testCsvQuery_StringValuesList", testCsvQuery_StringValuesList),
+        ("testCsvQuery_StringStringsList", testCsvQuery_StringStringsList),
+        ("testListQuery_NameValues", testListQuery_NameValues),
+        ("testListQuery_StringValues", testListQuery_StringValues),
+        ("testListQuery_NameStrings", testListQuery_NameStrings),
+        ("testListQuery_StringStrings", testListQuery_StringStrings),
+        ("testListQuery_NameValuesList", testListQuery_NameValuesList),
+        ("testListQuery_StringValuesList", testListQuery_StringValuesList),
+        ("testListQuery_NameStringsList", testListQuery_NameStringsList),
+        ("testListQuery_StringStringsList", testListQuery_StringStringsList)
     ]
     
 }

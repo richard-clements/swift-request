@@ -358,6 +358,8 @@ extension RequestTests {
         ("testAllowsConstrainedNetworkAccess", testAllowsConstrainedNetworkAccess),
         ("testNetworkServiceType", testNetworkServiceType),
         ("testHeaders", testHeaders),
+        ("testHeaders_Replace", testHeaders_Replace),
+        ("testHeaders_NoReplace", testHeaders_NoReplace),
         ("testHeader", testHeader),
         ("testInsertHeaders_Separated", testInsertHeaders_Separated),
         ("testMultipartFormHeader_AddsBoundary_IsUnique", testMultipartFormHeader_AddsBoundary_IsUnique),
