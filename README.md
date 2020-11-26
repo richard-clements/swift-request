@@ -208,9 +208,11 @@ You use the `MultipartForm` element to add multipart form data to the request. E
 let request = try? URLRequest {
   BaseUrl("https://github.com")
   Method(.post)
-  MultipartForm {
-    MultipartFormData(name: "name1", value: "Some string")
-    MultipartFormData(name: "name2", value: someData)
+  Body {
+    MultipartForm {
+      MultipartFormData(name: "name1", value: "Some string")
+      MultipartFormData(name: "name2", value: someData)
+    }
   }
 }
 ```
