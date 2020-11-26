@@ -240,6 +240,28 @@ class RequestTests: XCTestCase {
         XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-2"), "Value 2")
     }
     
+    func testHeaders_NoReplace() {
+        let request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            Headers {
+                Header(name: "Name-1", value: "Value 1")
+                Header(name: "Name-1", value: "Value 2")
+            }
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-1"), "Value 1,Value 2")
+    }
+    
+    func testHeaders_Replace() {
+        let request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            Headers {
+                Header(name: "Name-1", value: "Value 1", shouldReplace: true)
+                Header(name: "Name-1", value: "Value 2", shouldReplace: true)
+            }
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "Name-1"), "Value 2")
+    }
+    
     func testHeader() {
         let request = try? URLRequest {
             BaseUrl("https://www.test.com")
