@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol PathProtocol {
+public protocol PathConvertible {
     
     var items: [Path] { get }
     
@@ -16,7 +16,7 @@ public struct Path: Equatable {
     
 }
 
-extension Path: PathProtocol {
+extension Path: PathConvertible {
     
     public var items: [Path] {
         [self]
@@ -26,22 +26,29 @@ extension Path: PathProtocol {
 
 @_functionBuilder public struct PathBuilder {
     
-    public static func buildBlock(_ paths: PathProtocol...) -> PathProtocol {
+    public static func buildBlock(_ paths: PathConvertible...) -> PathConvertible {
         Paths(paths.flatMap { $0.items })
     }
     
-    public static func buildBlock(_ path: PathProtocol) -> PathProtocol {
+    public static func buildBlock(_ path: PathConvertible) -> PathConvertible {
         Paths(path.items)
     }
     
-    public static func buildIf(_ path: PathProtocol?) -> PathProtocol {
+    public static func buildIf(_ path: PathConvertible?) -> PathConvertible {
         path.map { Paths($0.items) } ?? Paths([])
     }
     
+    public static func buildEither(first: PathConvertible) -> PathConvertible {
+        first
+    }
+    
+    public static func buildEither(second: PathConvertible) -> PathConvertible {
+        second
+    }
     
 }
 
-public struct Paths: PathProtocol, Equatable {
+public struct Paths: PathConvertible, Equatable {
     
     public let items: [Path]
     
@@ -49,7 +56,7 @@ public struct Paths: PathProtocol, Equatable {
         self.items = paths
     }
     
-    public init(@PathBuilder builder: () -> PathProtocol) {
+    public init(@PathBuilder builder: () -> PathConvertible) {
         self.init(builder().items)
     }
 }

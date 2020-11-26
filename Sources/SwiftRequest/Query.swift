@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol QueryProtocol {
+public protocol QueryConvertible {
     var items: [Query] { get }
 }
 
@@ -90,7 +90,7 @@ extension Query {
     
 }
 
-extension Query: QueryProtocol {
+extension Query: QueryConvertible {
     
     public var items: [Query] {
         [self]
@@ -98,7 +98,7 @@ extension Query: QueryProtocol {
     
 }
 
-public struct ListQuery: Equatable, QueryProtocol {
+public struct ListQuery: Equatable, QueryConvertible {
     
     public let items: [Query]
     
@@ -136,28 +136,28 @@ public struct ListQuery: Equatable, QueryProtocol {
     
 }
 
-public struct Queries: Equatable, QueryProtocol {
+public struct Queries: Equatable, QueryConvertible {
     
     public let items: [Query]
     
     @_functionBuilder public struct QueryBuilder {
-        public static func buildBlock(_ queries: QueryProtocol...) -> QueryProtocol {
+        public static func buildBlock(_ queries: QueryConvertible...) -> QueryConvertible {
             Queries(queries.flatMap { $0.items })
         }
         
-        public static func buildBlock(_ query: QueryProtocol) -> QueryProtocol {
+        public static func buildBlock(_ query: QueryConvertible) -> QueryConvertible {
             Queries(query.items)
         }
         
-        public static func buildIf(_ query: QueryProtocol?) -> QueryProtocol {
+        public static func buildIf(_ query: QueryConvertible?) -> QueryConvertible {
             query.map { Queries($0.items) } ?? Queries([])
         }
         
-        public static func buildEither(first: QueryProtocol) -> QueryProtocol {
+        public static func buildEither(first: QueryConvertible) -> QueryConvertible {
             first
         }
         
-        public static func buildEither(second: QueryProtocol) -> QueryProtocol {
+        public static func buildEither(second: QueryConvertible) -> QueryConvertible {
             second
         }
     }
@@ -166,7 +166,7 @@ public struct Queries: Equatable, QueryProtocol {
         self.items = queries
     }
     
-    public init(@QueryBuilder builder: () -> QueryProtocol) {
+    public init(@QueryBuilder builder: () -> QueryConvertible) {
         self.init(builder().items)
     }
     

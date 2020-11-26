@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol HeaderProtocol {
+public protocol HeaderConvertible {
     var items: [Header] { get }
 }
 
@@ -56,7 +56,7 @@ extension Header {
     
 }
 
-extension Header: HeaderProtocol {
+extension Header: HeaderConvertible {
     
     public var items: [Header] {
         [self]
@@ -64,28 +64,28 @@ extension Header: HeaderProtocol {
     
 }
 
-public struct Headers: Equatable, HeaderProtocol {
+public struct Headers: Equatable, HeaderConvertible {
     
     public let items: [Header]
     
     @_functionBuilder public struct HeaderBuilder {
-        public static func buildBlock(_ headers: HeaderProtocol...) -> HeaderProtocol {
+        public static func buildBlock(_ headers: HeaderConvertible...) -> HeaderConvertible {
             Headers(headers.flatMap { $0.items })
         }
         
-        public static func buildBlock(_ header: HeaderProtocol) -> HeaderProtocol {
+        public static func buildBlock(_ header: HeaderConvertible) -> HeaderConvertible {
             Headers(header.items)
         }
         
-        public static func buildIf(_ header: HeaderProtocol?) -> HeaderProtocol {
+        public static func buildIf(_ header: HeaderConvertible?) -> HeaderConvertible {
             header.map { Headers($0.items) } ?? Headers([])
         }
         
-        public static func buildEither(first: HeaderProtocol) -> HeaderProtocol {
+        public static func buildEither(first: HeaderConvertible) -> HeaderConvertible {
             first
         }
         
-        public static func buildEither(second: HeaderProtocol) -> HeaderProtocol {
+        public static func buildEither(second: HeaderConvertible) -> HeaderConvertible {
             second
         }
     }
@@ -94,7 +94,7 @@ public struct Headers: Equatable, HeaderProtocol {
         self.items = headers
     }
     
-    public init(@HeaderBuilder builder: () -> HeaderProtocol) {
+    public init(@HeaderBuilder builder: () -> HeaderConvertible) {
         self.init(builder().items)
     }
     
