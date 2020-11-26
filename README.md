@@ -14,7 +14,7 @@ let request = try? URLRequest {
   }
   Queries {
     Query(name: "query1", value: "value1")
-    Query(name: "query2", value: "value2"
+    Query(name: "query2", value: "value2")
   }
   Headers {
     Header(name: .accept, value: .applicationJson)
