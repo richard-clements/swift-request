@@ -90,6 +90,21 @@ class HeaderTests: XCTestCase {
         XCTAssertNil(header.networkServiceType)
     }
     
+    func testReplaceDefault() {
+        let header = Header(name: "name", value: "value")
+        XCTAssertFalse(header.shouldReplace)
+    }
+    
+    func testReplaceTrue() {
+        let header = Header(name: "name", value: "value", shouldReplace: true)
+        XCTAssertTrue(header.shouldReplace)
+    }
+    
+    func testReplaceFalse() {
+        let header = Header(name: "name", value: "value", shouldReplace: false)
+        XCTAssertFalse(header.shouldReplace)
+    }
+    
     func testInitHeaders() {
         let headers = Headers {
             Header(name: "Name", value: "Value")

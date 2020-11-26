@@ -54,6 +54,42 @@ extension Query {
     
 }
 
+extension Query {
+    
+    public init(name: Name, values: Value...) {
+        self.init(name: name, value: values.map { $0.rawValue }.joined(separator: ","))
+    }
+    
+    public init(name: Name, values: [Value]) {
+        self.init(name: name, value: values.map { $0.rawValue }.joined(separator: ","))
+    }
+    
+    public init(name: String, values: Value...) {
+        self.init(name: Name(name), values: values)
+    }
+    
+    public init(name: Name, values: String...) {
+        self.init(name: name, values: values.map { Value($0) })
+    }
+    
+    public init(name: String, values: String...) {
+        self.init(name: Name(name), values: values.map { Value($0) })
+    }
+    
+    public init(name: String, values: [Value]) {
+        self.init(name: Name(name), values: values)
+    }
+    
+    public init(name: Name, values: [String]) {
+        self.init(name: name, values: values.map { Value($0) })
+    }
+    
+    public init(name: String, values: [String]) {
+        self.init(name: Name(name), values: values.map { Value($0) })
+    }
+    
+}
+
 extension Query: QueryProtocol {
     
     public var items: [Query] {
@@ -74,6 +110,10 @@ public struct ListQuery: Equatable, QueryProtocol {
         self.init(name: Query.Name(name), values: values)
     }
     
+    public init(name: String, values: String...) {
+        self.init(name: Query.Name(name), values: values.map { Query.Value($0) })
+    }
+    
     public init(name: Query.Name, values: String...) {
         self.init(name: name, values: values.map { Query.Value($0) })
     }
@@ -88,6 +128,10 @@ public struct ListQuery: Equatable, QueryProtocol {
     
     public init(name: Query.Name, values: [String]) {
         self.init(name: name, values: values.map { Query.Value($0) })
+    }
+    
+    public init(name: String, values: [String]) {
+        self.init(name: Query.Name(name), values: values.map { Query.Value($0) })
     }
     
 }

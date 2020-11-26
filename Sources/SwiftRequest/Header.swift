@@ -29,27 +29,29 @@ public struct Header: Equatable {
         }
     }
     
-    let name: Name
-    let value: Value
+    public let name: Name
+    public let value: Value
+    public let shouldReplace: Bool
     
-    public init(name: Name, value: Value) {
+    public init(name: Name, value: Value, shouldReplace: Bool = false) {
         self.name = name
         self.value = value
+        self.shouldReplace = shouldReplace
     }
 }
 
 extension Header {
     
-    public init(name: String, value: String) {
-        self.init(name: Name(name), value: Value(value))
+    public init(name: String, value: String, shouldReplace: Bool = false) {
+        self.init(name: Name(name), value: Value(value), shouldReplace: shouldReplace)
     }
     
-    public init(name: Name, value: String) {
-        self.init(name: name, value: Value(value))
+    public init(name: Name, value: String, shouldReplace: Bool = false) {
+        self.init(name: name, value: Value(value), shouldReplace: shouldReplace)
     }
     
-    public init(name: String, value: Value) {
-        self.init(name: Name(name), value: value)
+    public init(name: String, value: Value, shouldReplace: Bool = false) {
+        self.init(name: Name(name), value: value, shouldReplace: shouldReplace)
     }
     
 }

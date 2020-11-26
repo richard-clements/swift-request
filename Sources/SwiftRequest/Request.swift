@@ -33,9 +33,9 @@ extension URLRequest {
         }
         builtRequest.headers?.forEach {
             if $0.name.rawValue.lowercased() == "content-type" && $0.value.rawValue.lowercased() == "multipart/form-data" {
-                request.addValue($0.value.rawValue + "; boundary=\(boundary)", forHTTPHeaderField: $0.name.rawValue)
+                request.addHeader(Header(name: $0.name, value: "\($0.value.rawValue); boundary=\(boundary)"))
             } else {
-                request.addValue($0.value.rawValue, forHTTPHeaderField: $0.name.rawValue)
+                request.addHeader($0)
             }
         }
         if let bodyStream = builtRequest.bodyStream {
@@ -45,6 +45,14 @@ extension URLRequest {
         }
         
         self = request
+    }
+    
+    mutating func addHeader(_ header: Header) {
+        if header.shouldReplace {
+            setValue(header.value.rawValue, forHTTPHeaderField: header.name.rawValue)
+        } else {
+            addValue(header.value.rawValue, forHTTPHeaderField: header.name.rawValue)
+        }
     }
     
 }

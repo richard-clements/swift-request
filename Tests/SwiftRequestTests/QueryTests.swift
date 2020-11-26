@@ -114,6 +114,46 @@ class QueryTests: XCTestCase {
         XCTAssertNil(queries.networkServiceType)
     }
     
+    func testCsvQuery_NameValues() {
+        let query = Query(name: Query.Name("name1"), values: Query.Value("value1"), Query.Value("value2"))
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_NameStrings() {
+        let query = Query(name: Query.Name("name1"), values: String("value1"), String("value2"))
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_StringValues() {
+        let query = Query(name: String("name1"), values: Query.Value("value1"), Query.Value("value2"))
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_StringStrings() {
+        let query = Query(name: String("name1"), values: String("value1"), String("value2"))
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_NameValuesList() {
+        let query = Query(name: Query.Name("name1"), values: [Query.Value("value1"), Query.Value("value2")])
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_NameStringsList() {
+        let query = Query(name: Query.Name("name1"), values: [String("value1"), String("value2")])
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_StringValuesList() {
+        let query = Query(name: String("name1"), values: [Query.Value("value1"), Query.Value("value2")])
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
+    func testCsvQuery_StringStringsList() {
+        let query = Query(name: String("name1"), values: [String("value1"), String("value2")])
+        XCTAssertEqual(query, Query(name: "name1", value: "value1,value2"))
+    }
+    
     func testListQuery_NameValues() {
         let query = ListQuery(name: Query.Name("name1"), values: Query.Value("value1"), Query.Value("value2"))
         XCTAssertEqual(query.items, [
@@ -138,6 +178,14 @@ class QueryTests: XCTestCase {
         ])
     }
     
+    func testListQuery_StringStrings() {
+        let query = ListQuery(name: String("name1"), values: String("value1"), String("value2"))
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
     func testListQuery_NameValuesList() {
         let query = ListQuery(name: Query.Name("name1"), values: [Query.Value("value1"), Query.Value("value2")])
         XCTAssertEqual(query.items, [
@@ -156,6 +204,14 @@ class QueryTests: XCTestCase {
     
     func testListQuery_NameStringsList() {
         let query = ListQuery(name: Query.Name("name1"), values: [String("value1"), String("value2")])
+        XCTAssertEqual(query.items, [
+            Query(name: "name1", value: "value1"),
+            Query(name: "name1", value: "value2")
+        ])
+    }
+    
+    func testListQuery_StringStringsList() {
+        let query = ListQuery(name: String("name1"), values: [String("value1"), String("value2")])
         XCTAssertEqual(query.items, [
             Query(name: "name1", value: "value1"),
             Query(name: "name1", value: "value2")
