@@ -110,4 +110,12 @@ extension Array where Element == PartialRequest {
         partialRequest ?? EmptyRequest()
     }
     
+    public static func buildEither(first: PartialRequest) -> PartialRequest {
+        first
+    }
+    
+    public static func buildEither(second: PartialRequest) -> PartialRequest {
+        second
+    }
+    
 }

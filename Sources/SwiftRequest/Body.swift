@@ -54,6 +54,13 @@ public struct FormDataBuilder {
         formData.map { $0 } ?? CombinedRequestFormData(children: [])
     }
     
+    public static func buildEither(first: PartialFormData) -> PartialFormData {
+        first
+    }
+    
+    public static func buildEither(second: PartialFormData) -> PartialFormData {
+        second
+    }
 }
 
 public struct MultipartForm {

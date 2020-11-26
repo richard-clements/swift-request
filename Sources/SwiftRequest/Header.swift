@@ -80,6 +80,14 @@ public struct Headers: Equatable, HeaderProtocol {
         public static func buildIf(_ header: HeaderProtocol?) -> HeaderProtocol {
             header.map { Headers($0.items) } ?? Headers([])
         }
+        
+        public static func buildEither(first: HeaderProtocol) -> HeaderProtocol {
+            first
+        }
+        
+        public static func buildEither(second: HeaderProtocol) -> HeaderProtocol {
+            second
+        }
     }
     
     private init(_ headers: [Header]) {

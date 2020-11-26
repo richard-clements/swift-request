@@ -152,6 +152,14 @@ public struct Queries: Equatable, QueryProtocol {
         public static func buildIf(_ query: QueryProtocol?) -> QueryProtocol {
             query.map { Queries($0.items) } ?? Queries([])
         }
+        
+        public static func buildEither(first: QueryProtocol) -> QueryProtocol {
+            first
+        }
+        
+        public static func buildEither(second: QueryProtocol) -> QueryProtocol {
+            second
+        }
     }
     
     private init(_ queries: [Query]) {
