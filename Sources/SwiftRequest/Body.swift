@@ -1,5 +1,7 @@
 import Foundation
+#if canImport(UniformTypeIdentifiers)
 import UniformTypeIdentifiers
+#endif
 
 public protocol PartialFormData {
     var name: String { get }
@@ -45,6 +47,7 @@ public struct MultipartFormFile: PartialFormData {
     public let contentType: MultipartForm.MimeType?
     public let transferEncoding: MultipartForm.TransferEncoding?
     
+    #if canImport(UniformTypeIdentifiers)
     public init(name: String, file: URL, contentType: MultipartForm.MimeType? = nil, transferEncoding: MultipartForm.TransferEncoding? = nil) {
         self.name = name
         self.fileLocation = file
@@ -59,6 +62,18 @@ public struct MultipartFormFile: PartialFormData {
         }
         self.transferEncoding = transferEncoding
     }
+    #else
+    public init(name: String, file: URL, contentType: MultipartForm.MimeType? = nil, transferEncoding: MultipartForm.TransferEncoding? = nil) {
+        self.name = name
+        self.fileLocation = file
+        if let contentType = contentType {
+            self.contentType = contentType
+        } else {
+            self.contentType = nil
+        }
+        self.transferEncoding = transferEncoding
+    }
+    #endif
     
     public var children: [PartialFormData] {
         [self]

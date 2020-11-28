@@ -139,11 +139,19 @@ class BodyTests: XCTestCase {
 
 extension BodyTests {
     
-    static var allTests = [
+    static var nonConstrainedTests = [
         ("testInitJson", testInitJson),
         ("testInitMultipart", testInitMultipart),
-        ("testInitMultipartFile", testInitMultipartFile),
         ("testMultipartEither", testMultipartEither)
     ]
+    
+    static var constrainedTests: [(String, (BodyTests) -> () -> ())] {
+        if #available(iOS 10.0, macOS 10.12, tvOS 10.0, watchOS 3.0, *) {
+            return [("testInitMultipartFile", testInitMultipartFile)]
+        }
+        return []
+    }
+    
+    static var allTests = nonConstrainedTests + constrainedTests
     
 }
