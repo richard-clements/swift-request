@@ -57,11 +57,20 @@ class MultipartFormTests: XCTestCase {
 
 extension MultipartFormTests {
     
-    static var allTests = [
+    static var nonConstrainedTests = [
         ("testInitString", testInitString),
         ("testInitData", testInitData),
         ("testMultipart", testMultipart),
         ("testIf", testIf),
-        ("testContentTypeAuto", testContentTypeAuto)
     ]
+    
+    static var constrainedTests: [(String, (MultipartFormTests) -> () -> ())] {
+        #if canImport(UniformTypeIdentifiers)
+        return [("testContentTypeAuto", testContentTypeAuto)]
+        #else
+        return []
+        #endif
+    }
+    
+    static var allTests = nonConstrainedTests + constrainedTests
 }
