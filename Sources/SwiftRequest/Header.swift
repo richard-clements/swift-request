@@ -84,7 +84,7 @@ public struct Headers: Equatable, HeaderConvertible {
         public static func buildEither(first: HeaderConvertible) -> HeaderConvertible {
             first
         }
-        
+
         public static func buildEither(second: HeaderConvertible) -> HeaderConvertible {
             second
         }

@@ -25,10 +25,10 @@ extension URLRequest {
         request.httpShouldHandleCookies = builtRequest.httpShouldHandleCookies ?? request.httpShouldHandleCookies
         request.allowsCellularAccess = builtRequest.allowsCellularAccess ?? request.allowsCellularAccess
         request.networkServiceType = builtRequest.networkServiceType ?? request.networkServiceType
-        if #available(OSX 10.15, *) {
+        if #available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, macCatalyst 13.0, *) {
             request.allowsExpensiveNetworkAccess = builtRequest.allowsExpensiveNetworkAccess ?? request.allowsExpensiveNetworkAccess
         }
-        if #available(OSX 10.15, *) {
+        if #available(OSX 10.15, iOS 13.0, tvOS 13.0, watchOS 6.0, macCatalyst 13.0, *) {
             request.allowsConstrainedNetworkAccess = builtRequest.allowsConstrainedNetworkAccess ?? request.allowsConstrainedNetworkAccess
         }
         builtRequest.headers?.forEach {

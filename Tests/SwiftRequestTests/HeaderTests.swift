@@ -148,6 +148,27 @@ class HeaderTests: XCTestCase {
             Header(name: "item1", value: "someValue")
         ])
     }
+    
+    func testEither() {
+        var someToggle = true
+        var headers = Headers {
+            if someToggle {
+                Header(name: "toggle", value: "on")
+            } else {
+                Header(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(headers.items, [Header(name: "toggle", value: "on")])
+        someToggle = false
+        headers = Headers {
+            if someToggle {
+                Header(name: "toggle", value: "on")
+            } else {
+                Header(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(headers.items, [Header(name: "toggle", value: "off")])
+    }
 }
 
 extension HeaderTests {
@@ -158,7 +179,8 @@ extension HeaderTests {
         ("testReplaceDefault", testReplaceDefault),
         ("testReplaceTrue", testReplaceTrue),
         ("testReplaceFalse", testReplaceFalse),
-        ("testIf", testIf)
+        ("testIf", testIf),
+        ("testEither", testEither)
     ]
     
 }

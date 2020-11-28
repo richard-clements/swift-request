@@ -23,6 +23,8 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "SwiftRequestTests",
-            dependencies: ["SwiftRequest"]),
+            dependencies: ["SwiftRequest"],
+            resources: [.copy("Resources/testimage.png")]
+        ),
     ]
 )

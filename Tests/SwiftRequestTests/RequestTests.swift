@@ -177,6 +177,7 @@ class RequestTests: XCTestCase {
         XCTAssertEqual(falseRequest?.allowsCellularAccess, false)
     }
     
+    @available(iOS 13.0, tvOS 13.0, *)
     func testAllowsExpensiveNetworkAccess() {
         let defaultRequest = try? URLRequest {
             BaseUrl("https://www.test.com")
@@ -196,6 +197,7 @@ class RequestTests: XCTestCase {
         XCTAssertEqual(falseRequest?.allowsExpensiveNetworkAccess, false)
     }
     
+    @available(iOS 13.0, tvOS 13.0, *)
     func testAllowsConstrainedNetworkAccess() {
         let defaultRequest = try? URLRequest {
             BaseUrl("https://www.test.com")
@@ -336,11 +338,35 @@ class RequestTests: XCTestCase {
         }
         XCTAssertEqual(request?.value(forHTTPHeaderField: "name-1"), "value 1")
     }
+    
+    func testEither() {
+        var toggle = true
+        var request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            if toggle {
+                Header(name: "toggle", value: "on")
+            } else {
+                Header(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "toggle"), "on")
+        
+        toggle = false
+        request = try? URLRequest {
+            BaseUrl("https://www.test.com")
+            if toggle {
+                Header(name: "toggle", value: "on")
+            } else {
+                Header(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(request?.value(forHTTPHeaderField: "toggle"), "off")
+    }
 }
 
 extension RequestTests {
     
-    static var allTests = [
+    static var nonConstrainedTests = [
         ("testInitUrl", testInitUrl),
         ("testInitHostAndScheme", testInitHostAndScheme),
         ("testInitWithBadUrl", testInitWithBadUrl),
@@ -354,8 +380,6 @@ extension RequestTests {
         ("testHttpShouldUsePipelining", testHttpShouldUsePipelining),
         ("testHttpShouldHandleCookies", testHttpShouldHandleCookies),
         ("testAllowsCellularAccess", testAllowsCellularAccess),
-        ("testAllowsExpensiveNetworkAccess", testAllowsExpensiveNetworkAccess),
-        ("testAllowsConstrainedNetworkAccess", testAllowsConstrainedNetworkAccess),
         ("testNetworkServiceType", testNetworkServiceType),
         ("testHeaders", testHeaders),
         ("testHeaders_Replace", testHeaders_Replace),
@@ -365,7 +389,20 @@ extension RequestTests {
         ("testMultipartFormHeader_AddsBoundary_IsUnique", testMultipartFormHeader_AddsBoundary_IsUnique),
         ("testBodyStream", testBodyStream),
         ("testBody", testBody),
-        ("testIf", testIf)
+        ("testIf", testIf),
+        ("testEither", testEither)
     ]
+    
+    static var constrainedTests: [(String, (RequestTests) -> () -> ())] {
+        if #available(iOS 13.0, tvOS 13.0, macCatalyst 13.0, watchOS 6.0, *) {
+            return [
+                ("testAllowsExpensiveNetworkAccess", testAllowsExpensiveNetworkAccess),
+                ("testAllowsConstrainedNetworkAccess", testAllowsConstrainedNetworkAccess)
+            ]
+        }
+        return []
+    }
+    
+    static var allTests = nonConstrainedTests + constrainedTests
     
 }

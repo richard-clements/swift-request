@@ -238,6 +238,28 @@ class QueryTests: XCTestCase {
         ])
     }
     
+    func testEither() {
+        var someToggle = true
+        var queries = Queries {
+            if someToggle {
+                Query(name: "toggle", value: "on")
+            } else {
+                Query(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(queries.items, [Query(name: "toggle", value: "on")])
+        
+        someToggle = false
+        queries = Queries {
+            if someToggle {
+                Query(name: "toggle", value: "on")
+            } else {
+                Query(name: "toggle", value: "off")
+            }
+        }
+        XCTAssertEqual(queries.items, [Query(name: "toggle", value: "off")])
+    }
+    
 }
 
 extension QueryTests {
@@ -261,7 +283,8 @@ extension QueryTests {
         ("testListQuery_NameValuesList", testListQuery_NameValuesList),
         ("testListQuery_StringValuesList", testListQuery_StringValuesList),
         ("testListQuery_NameStringsList", testListQuery_NameStringsList),
-        ("testListQuery_StringStringsList", testListQuery_StringStringsList)
+        ("testListQuery_StringStringsList", testListQuery_StringStringsList),
+        ("testEither", testEither)
     ]
     
 }

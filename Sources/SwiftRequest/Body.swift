@@ -1,24 +1,35 @@
 import Foundation
+import UniformTypeIdentifiers
 
 public protocol PartialFormData {
     var name: String { get }
-    var value: Data { get }
+    var value: Data? { get }
+    var fileLocation: URL? { get }
+    var contentType: MultipartForm.MimeType? { get }
+    var transferEncoding: MultipartForm.TransferEncoding? { get }
     var children: [PartialFormData] { get }
 }
 
 public struct MultipartFormData: PartialFormData {
     
     public let name: String
-    public let value: Data
+    public let value: Data?
+    public let fileLocation: URL? = nil
+    public let contentType: MultipartForm.MimeType?
+    public let transferEncoding: MultipartForm.TransferEncoding?
     
-    public init(name: String, value: String) {
+    public init(name: String, value: String, contentType: MultipartForm.MimeType? = nil, transferEncoding: MultipartForm.TransferEncoding? = nil) {
         self.name = name
         self.value = value.data(using: .utf8)!
+        self.contentType = contentType
+        self.transferEncoding = transferEncoding
     }
     
-    public init(name: String, value: Data) {
+    public init(name: String, value: Data, contentType: MultipartForm.MimeType? = nil, transferEncoding: MultipartForm.TransferEncoding? = nil) {
         self.name = name
         self.value = value
+        self.contentType = contentType
+        self.transferEncoding = transferEncoding
     }
     
     public var children: [PartialFormData] {
@@ -26,10 +37,42 @@ public struct MultipartFormData: PartialFormData {
     }
 }
 
+public struct MultipartFormFile: PartialFormData {
+    
+    public let name: String
+    public let value: Data? = nil
+    public let fileLocation: URL?
+    public let contentType: MultipartForm.MimeType?
+    public let transferEncoding: MultipartForm.TransferEncoding?
+    
+    public init(name: String, file: URL, contentType: MultipartForm.MimeType? = nil, transferEncoding: MultipartForm.TransferEncoding? = nil) {
+        self.name = name
+        self.fileLocation = file
+        if let contentType = contentType {
+            self.contentType = contentType
+        } else if #available(iOS 14.0, macOS 11.0, tvOS 14.0, macCatalyst 14.0, watchOS 7.0, *) {
+            self.contentType = UTType(filenameExtension: file.pathExtension)?
+                .preferredMIMEType
+                .map { MultipartForm.MimeType(stringLiteral: $0) }
+        } else {
+            self.contentType = nil
+        }
+        self.transferEncoding = transferEncoding
+    }
+    
+    public var children: [PartialFormData] {
+        [self]
+    }
+    
+}
+
 struct CombinedRequestFormData: PartialFormData {
     
     let name: String = ""
-    let value: Data = Data()
+    let value: Data? = nil
+    let fileLocation: URL? = nil
+    let contentType: MultipartForm.MimeType? = nil
+    let transferEncoding: MultipartForm.TransferEncoding? = nil
     let children: [PartialFormData]
     
     init(children: [PartialFormData]) {
@@ -72,6 +115,26 @@ public struct MultipartForm {
     }
 }
 
+extension MultipartForm {
+    
+    public struct MimeType: ExpressibleByStringLiteral, Equatable {
+        fileprivate let rawValue: String
+        
+        public init(stringLiteral value: String) {
+            self.rawValue = value
+        }
+    }
+    
+    public struct TransferEncoding: ExpressibleByStringLiteral, Equatable {
+        fileprivate let rawValue: String
+        
+        public init(stringLiteral value: String) {
+            self.rawValue = value
+        }
+    }
+    
+}
+
 public struct Json<T: Encodable> {
     
     let data: T
@@ -95,21 +158,33 @@ public struct Body {
 extension Body {
     
     public init(builder: () -> MultipartForm) {
+        let lineBreak = "\r\n"
         let component = builder()
         self.init { (arguments: String...) in
             guard let boundary = arguments.first, !component.children.isEmpty else {
                 return nil
             }
             
-            func formPart(name: String, value: Data) -> Data {
-                var data = "--\(boundary)\r\nContent-Disposition: form-data; name=\"\(name)\"\r\n\r\n".data(using: .utf8)!
-                data.append(value)
+            func formPart(name: String, value: Data?, file: URL?, contentType: String?, transferEncoding: String?) -> Data {
+                var metadata = ["Content-Disposition: form-data; name=\"\(name)\""]
+                if let contentType = contentType {
+                    metadata.append("Content-Type: \(contentType)")
+                }
+                if let transferEncoding = transferEncoding {
+                    metadata.append("Content-Transfer-Encoding: \(transferEncoding)")
+                }
+                
+                let metadataValue = metadata.joined(separator: lineBreak)
+                var data = "--\(boundary)\(lineBreak)\(metadataValue)\(lineBreak)\(lineBreak)".data(using: .utf8)!
+                if let transferValue = file.flatMap({ try? Data(contentsOf: $0) }) ?? value {
+                    data.append(transferValue)
+                }
                 return data
             }
             
             var data = Data(
                 component.children
-                    .map { formPart(name: $0.name, value: $0.value) }
+                    .map { formPart(name: $0.name, value: $0.value, file: $0.fileLocation, contentType: $0.contentType?.rawValue, transferEncoding: $0.transferEncoding?.rawValue) }
                     .joined(separator: "\r\n".data(using: .utf8)!)
             )
             data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)

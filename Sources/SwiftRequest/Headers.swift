@@ -48,11 +48,11 @@ extension Header.Value {
         Self("Bearer \(token)")
     }
     
-    static func basicAuth(username: String, password: String) -> Self {
+    static func basicAuth(username: String, password: String) -> Self? {
         "\(username):\(password)"
             .data(using: .utf8)
             .map { $0.base64EncodedString() }
-            .map { Self($0) } ?? ""
+            .map { Self($0) }
     }
     
 }

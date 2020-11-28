@@ -45,6 +45,12 @@ class MultipartFormTests: XCTestCase {
         XCTAssertEqual(form.children.count, 1)
         XCTAssertEqual(form.children[0].name, "name")
     }
+    
+    func testContentTypeAuto() {
+        let file = URL(string: "file://somefile/path.mp3")!
+        let part = MultipartFormFile(name: "name", file: file)
+        XCTAssertEqual(part.contentType, "audio/mpeg")
+    }
 }
 
 extension MultipartFormTests {
@@ -53,6 +59,7 @@ extension MultipartFormTests {
         ("testInitString", testInitString),
         ("testInitData", testInitData),
         ("testMultipart", testMultipart),
-        ("testIf", testIf)
+        ("testIf", testIf),
+        ("testContentTypeAuto", testContentTypeAuto)
     ]
 }

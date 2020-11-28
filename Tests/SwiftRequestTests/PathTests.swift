@@ -68,6 +68,28 @@ class PathTests: XCTestCase {
         }
         XCTAssertEqual(paths.items, [Path("path")])
     }
+    
+    func testEither() {
+        var someToggle = true
+        var paths = Paths {
+            if someToggle {
+                Path("on")
+            } else {
+                Path("off")
+            }
+        }
+        XCTAssertEqual(paths.items, [Path("on")])
+        
+        someToggle = false
+        paths = Paths {
+            if someToggle {
+                Path("on")
+            } else {
+                Path("off")
+            }
+        }
+        XCTAssertEqual(paths.items, [Path("off")])
+    }
 }
 
 extension PathTests {
@@ -75,7 +97,8 @@ extension PathTests {
     static var allTests = [
         ("testInit", testInit),
         ("testPaths", testPaths),
-        ("testIf", testIf)
+        ("testIf", testIf),
+        ("testEither", testEither)
     ]
     
 }
