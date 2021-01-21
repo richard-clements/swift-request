@@ -7,6 +7,7 @@ class PathTests: XCTestCase {
         let path = Path("directory1/directory2//directory3")
         XCTAssertEqual(path.path, "/directory1/directory2/directory3")
         XCTAssertNil(path.host)
+        XCTAssertNil(path.port)
         XCTAssertNil(path.url)
         XCTAssertNil(path.scheme)
         XCTAssertNil(path.headers)
@@ -33,6 +34,7 @@ class PathTests: XCTestCase {
         }
         XCTAssertEqual(path.path, "/directory1/directory2/directory3/directory4")
         XCTAssertNil(path.host)
+        XCTAssertNil(path.port)
         XCTAssertNil(path.url)
         XCTAssertNil(path.scheme)
         XCTAssertNil(path.headers)

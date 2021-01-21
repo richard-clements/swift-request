@@ -1,16 +1,16 @@
 import Foundation
 
-public struct BodyStream {
+public struct Port {
     
-    public let bodyStream: InputStream?
+    private let rawValue: Int
     
-    public init(_ stream: InputStream) {
-        self.bodyStream = stream
+    public init(_ rawValue: Int) {
+        self.rawValue = rawValue
     }
     
 }
 
-extension BodyStream: PartialRequest {
+extension Port: PartialRequest {
     
     public var url: URL? {
         nil
@@ -25,7 +25,7 @@ extension BodyStream: PartialRequest {
     }
     
     public var port: Int? {
-        nil
+        rawValue
     }
     
     public var path: String? {
@@ -53,6 +53,10 @@ extension BodyStream: PartialRequest {
     }
     
     public var body: Body? {
+        nil
+    }
+    
+    public var bodyStream: InputStream? {
         nil
     }
     

@@ -18,6 +18,7 @@ class CachePolicyTests: XCTestCase {
             XCTAssertNil(CachePolicy(policy).url)
             XCTAssertNil(CachePolicy(policy).scheme)
             XCTAssertNil(CachePolicy(policy).host)
+            XCTAssertNil(CachePolicy(policy).port)
             XCTAssertNil(CachePolicy(policy).path)
             XCTAssertNil(CachePolicy(policy).method)
             XCTAssertNil(CachePolicy(policy).timeoutInterval)

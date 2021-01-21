@@ -8,6 +8,7 @@ class SchemeTests: XCTestCase {
         XCTAssertEqual(scheme.scheme, "scheme")
         XCTAssertNil(scheme.url)
         XCTAssertNil(scheme.host)
+        XCTAssertNil(scheme.port)
         XCTAssertNil(scheme.path)
         XCTAssertNil(scheme.method)
         XCTAssertNil(scheme.headers)

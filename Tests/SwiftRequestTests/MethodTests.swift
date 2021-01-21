@@ -15,6 +15,7 @@ class MethodTests: XCTestCase {
         for verb in verbs {
             XCTAssertEqual(Method(verb).method, verb.rawValue)
             XCTAssertNil(Method(verb).host)
+            XCTAssertNil(Method(verb).port)
             XCTAssertNil(Method(verb).url)
             XCTAssertNil(Method(verb).scheme)
             XCTAssertNil(Method(verb).path)

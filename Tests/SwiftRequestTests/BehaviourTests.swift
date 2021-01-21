@@ -44,6 +44,7 @@ class BehaviourTests: XCTestCase {
         XCTAssertNil(Behaviour().url)
         XCTAssertNil(Behaviour().scheme)
         XCTAssertNil(Behaviour().host)
+        XCTAssertNil(Behaviour().port)
         XCTAssertNil(Behaviour().path)
         XCTAssertNil(Behaviour().method)
         XCTAssertNil(Behaviour().cachePolicy)

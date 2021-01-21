@@ -24,6 +24,10 @@ extension TimeoutPolicy: PartialRequest {
         nil
     }
     
+    public var port: Int? {
+        nil
+    }
+    
     public var path: String? {
         nil
     }

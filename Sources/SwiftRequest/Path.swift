@@ -75,6 +75,10 @@ extension Path: PartialRequest {
         nil
     }
     
+    public var port: Int? {
+        nil
+    }
+    
     public var path: String? {
         "/" + rawValue
             .split(separator: "/")
@@ -146,6 +150,10 @@ extension Paths: PartialRequest {
     }
     
     public var host: String? {
+        nil
+    }
+    
+    public var port: Int? {
         nil
     }
     

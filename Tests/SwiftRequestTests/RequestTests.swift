@@ -18,6 +18,15 @@ class RequestTests: XCTestCase {
         XCTAssertEqual(request?.url?.absoluteString, "https://www.test.com")
     }
     
+    func testInitHostAndSchemeWithPort() {
+        let request = try? URLRequest {
+            Scheme("https")
+            Host("www.test.com")
+            Port(8080)
+        }
+        XCTAssertEqual(request?.url?.absoluteString, "https://www.test.com:8080")
+    }
+    
     func testInitWithBadUrl() {
         XCTAssertThrowsError(try URLRequest {
             BaseUrl("somepipes|pipe")

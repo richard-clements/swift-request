@@ -4,6 +4,7 @@ public protocol PartialRequest {
     var url: URL? { get }
     var scheme: String? { get }
     var host: String? { get }
+    var port: Int? { get }
     var path: String? { get }
     var method: String? { get }
     var cachePolicy: URLRequest.CachePolicy? { get }
@@ -24,6 +25,7 @@ struct EmptyRequest: PartialRequest {
     let url: URL? = nil
     let scheme: String? = nil
     let host: String? = nil
+    let port: Int? = nil
     let path: String? = nil
     let method: String? = nil
     let cachePolicy: URLRequest.CachePolicy? = nil
@@ -44,6 +46,7 @@ struct FullRequest: PartialRequest {
     let url: URL?
     let scheme: String?
     let host: String?
+    let port: Int?
     let path: String?
     let method: String?
     let cachePolicy: URLRequest.CachePolicy?
@@ -85,6 +88,7 @@ extension Array where Element == PartialRequest {
         let url = partialRequest.reduce(forKey: \.url)
         let scheme = partialRequest.reduce(forKey: \.scheme)
         let host = partialRequest.reduce(forKey: \.host)
+        let port = partialRequest.reduce(forKey: \.port)
         let path = partialRequest.reduce(forKey: \.path)
         let method = partialRequest.reduce(forKey: \.method)
         let cachePolicy = partialRequest.reduce(forKey: \.cachePolicy)
@@ -99,7 +103,7 @@ extension Array where Element == PartialRequest {
         let allowsConstrainedNetworkAccess = partialRequest.reduce(forKey: \.allowsConstrainedNetworkAccess)
         let allowsExpensiveNetworkAccess = partialRequest.reduce(forKey: \.allowsExpensiveNetworkAccess)
         let serviceType = partialRequest.reduce(forKey: \.networkServiceType)
-        return FullRequest(url: url, scheme: scheme, host: host, path: path, method: method, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval, query: query, headers: headers, body: body, bodyStream: bodyStream, httpShouldUsePipelining: httpShouldUsePipelining, httpShouldHandleCookies: httpShouldHandleCookies, allowsCellularAccess: allowsCellularAccess, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess, allowsExpensiveNetworkAccess: allowsExpensiveNetworkAccess, networkServiceType: serviceType)
+        return FullRequest(url: url, scheme: scheme, host: host, port: port, path: path, method: method, cachePolicy: cachePolicy, timeoutInterval: timeoutInterval, query: query, headers: headers, body: body, bodyStream: bodyStream, httpShouldUsePipelining: httpShouldUsePipelining, httpShouldHandleCookies: httpShouldHandleCookies, allowsCellularAccess: allowsCellularAccess, allowsConstrainedNetworkAccess: allowsConstrainedNetworkAccess, allowsExpensiveNetworkAccess: allowsExpensiveNetworkAccess, networkServiceType: serviceType)
     }
     
     public static func buildBlock(_ partialRequest: PartialRequest) -> PartialRequest {

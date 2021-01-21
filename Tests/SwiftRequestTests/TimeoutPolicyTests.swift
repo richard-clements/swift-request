@@ -8,6 +8,7 @@ class TimeoutPolicyTests: XCTestCase {
         XCTAssertEqual(timeout.timeoutInterval, 23)
         XCTAssertNil(timeout.url)
         XCTAssertNil(timeout.host)
+        XCTAssertNil(timeout.port)
         XCTAssertNil(timeout.scheme)
         XCTAssertNil(timeout.path)
         XCTAssertNil(timeout.method)

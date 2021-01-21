@@ -13,6 +13,7 @@ public func allTests() -> [XCTestCaseEntry] {
         testCase(HostTests.allTests),
         testCase(MethodTests.allTests),
         testCase(PathTests.allTests),
+        testCase(PortTests.allTests),
         testCase(QueryTests.allTests),
         testCase(SchemeTests.allTests),
         testCase(ServiceTypeTests.allTests),

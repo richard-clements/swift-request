@@ -24,6 +24,7 @@ class ServiceTypeTests: XCTestCase {
             XCTAssertEqual(service.networkServiceType, serviceType)
             XCTAssertNil(service.url)
             XCTAssertNil(service.host)
+            XCTAssertNil(service.port)
             XCTAssertNil(service.scheme)
             XCTAssertNil(service.path)
             XCTAssertNil(service.method)

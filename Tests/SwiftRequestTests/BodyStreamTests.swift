@@ -11,6 +11,7 @@ class BodyStreamTests: XCTestCase {
         XCTAssertNil(bodyStream.url)
         XCTAssertNil(bodyStream.scheme)
         XCTAssertNil(bodyStream.host)
+        XCTAssertNil(bodyStream.port)
         XCTAssertNil(bodyStream.path)
         XCTAssertNil(bodyStream.method)
         XCTAssertNil(bodyStream.cachePolicy)

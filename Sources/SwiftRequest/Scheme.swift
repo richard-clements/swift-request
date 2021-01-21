@@ -8,12 +8,20 @@ public struct Scheme {
         public init(stringLiteral value: StringLiteralType) {
             self.rawValue = value
         }
+        
+        public init(_ value: String) {
+            self.rawValue = value
+        }
     }
     
     private let rawValue: Value
     
     public init(_ rawValue: Value) {
         self.rawValue = rawValue
+    }
+    
+    public init(_ value: String) {
+        self.rawValue = .init(value)
     }
     
 }
@@ -34,6 +42,10 @@ extension Scheme: PartialRequest {
     }
     
     public var host: String? {
+        nil
+    }
+    
+    public var port: Int? {
         nil
     }
     

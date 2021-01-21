@@ -1,13 +1,13 @@
 import XCTest
 @testable import SwiftRequest
 
-class HostTests: XCTestCase {
+class PortTests: XCTestCase {
     
     func testInit() {
-        let host = Host("host")
-        XCTAssertEqual(host.host, "host")
+        let host = Port(8080)
+        XCTAssertEqual(host.port, 8080)
+        XCTAssertNil(host.host)
         XCTAssertNil(host.url)
-        XCTAssertNil(host.port)
         XCTAssertNil(host.scheme)
         XCTAssertNil(host.path)
         XCTAssertNil(host.method)
@@ -28,7 +28,7 @@ class HostTests: XCTestCase {
     
 }
 
-extension HostTests {
+extension PortTests {
     
     static var allTests = [
         ("testInit", testInit)

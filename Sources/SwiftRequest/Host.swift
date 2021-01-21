@@ -32,6 +32,10 @@ extension Host: PartialRequest {
         rawValue.rawValue
     }
     
+    public var port: Int? {
+        nil
+    }
+    
     public var path: String? {
         nil
     }
