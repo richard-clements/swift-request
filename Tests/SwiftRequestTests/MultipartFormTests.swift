@@ -47,6 +47,7 @@ class MultipartFormTests: XCTestCase {
     }
     
     #if canImport(UniformTypeIdentifiers)
+    @available(iOS 14.0, macOS 11.0, tvOS 14.0, macCatalyst 14.0, watchOS 7.0, *)
     func testContentTypeAuto() {
         let file = URL(string: "file://somefile/path.mp3")!
         let part = MultipartFormFile(name: "name", file: file)
@@ -66,7 +67,11 @@ extension MultipartFormTests {
     
     static var constrainedTests: [(String, (MultipartFormTests) -> () -> ())] {
         #if canImport(UniformTypeIdentifiers)
-        return [("testContentTypeAuto", testContentTypeAuto)]
+        if #available(iOS 14.0, macOS 11.0, tvOS 14.0, macCatalyst 14.0, watchOS 7.0, *) {
+            return [("testContentTypeAuto", testContentTypeAuto)]
+        } else {
+            return []
+        }
         #else
         return []
         #endif
