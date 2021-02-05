@@ -46,31 +46,14 @@ class MultipartFormTests: XCTestCase {
         XCTAssertEqual(form.children[0].name, "name")
     }
     
-    #if canImport(UniformTypeIdentifiers)
-    func testContentTypeAuto() {
-        let file = URL(string: "file://somefile/path.mp3")!
-        let part = MultipartFormFile(name: "name", file: file)
-        XCTAssertEqual(part.contentType, "audio/mpeg")
-    }
-    #endif
 }
 
 extension MultipartFormTests {
     
-    static var nonConstrainedTests = [
+    static var allTests = [
         ("testInitString", testInitString),
         ("testInitData", testInitData),
         ("testMultipart", testMultipart),
         ("testIf", testIf),
     ]
-    
-    static var constrainedTests: [(String, (MultipartFormTests) -> () -> ())] {
-        #if canImport(UniformTypeIdentifiers)
-        return [("testContentTypeAuto", testContentTypeAuto)]
-        #else
-        return []
-        #endif
-    }
-    
-    static var allTests = nonConstrainedTests + constrainedTests
 }
