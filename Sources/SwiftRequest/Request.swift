@@ -2,7 +2,7 @@ import Foundation
 
 extension URLRequest {
     
-    public init(@RequestBuilder builder: () -> PartialRequest) throws {
+    public init(@RequestBuilder builder: () -> PartialRequest) {
         let builtRequest = builder()
         var components: URLComponents
         if let url = builtRequest.url, let cpts = URLComponents(url: url, resolvingAgainstBaseURL: false) {
@@ -13,7 +13,7 @@ extension URLRequest {
             components.scheme = scheme
             components.host = host
         } else {
-            throw URLError(URLError.Code.badURL)
+            components = URLComponents()
         }
         components.port = builtRequest.port
         components.path = builtRequest.path ?? ""

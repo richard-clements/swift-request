@@ -82,7 +82,7 @@ extension Array where Element == PartialRequest {
     
 }
 
-@_functionBuilder public struct RequestBuilder {
+@resultBuilder public struct RequestBuilder {
     
     public static func buildBlock(_ partialRequest: PartialRequest...) -> PartialRequest {
         let url = partialRequest.reduce(forKey: \.url)

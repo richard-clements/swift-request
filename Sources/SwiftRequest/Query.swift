@@ -140,7 +140,7 @@ public struct Queries: Equatable, QueryConvertible {
     
     public let items: [Query]
     
-    @_functionBuilder public struct QueryBuilder {
+    @resultBuilder public struct QueryBuilder {
         public static func buildBlock(_ queries: QueryConvertible...) -> QueryConvertible {
             Queries(queries.flatMap { $0.items })
         }

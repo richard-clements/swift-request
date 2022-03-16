@@ -68,7 +68,7 @@ public struct Headers: Equatable, HeaderConvertible {
     
     public let items: [Header]
     
-    @_functionBuilder public struct HeaderBuilder {
+    @resultBuilder public struct HeaderBuilder {
         public static func buildBlock(_ headers: HeaderConvertible...) -> HeaderConvertible {
             Headers(headers.flatMap { $0.items })
         }

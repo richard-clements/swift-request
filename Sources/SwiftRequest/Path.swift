@@ -24,7 +24,7 @@ extension Path: PathConvertible {
     
 }
 
-@_functionBuilder public struct PathBuilder {
+@resultBuilder public struct PathBuilder {
     
     public static func buildBlock(_ paths: PathConvertible...) -> PathConvertible {
         Paths(paths.flatMap { $0.items })

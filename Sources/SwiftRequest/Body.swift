@@ -96,7 +96,7 @@ struct CombinedRequestFormData: PartialFormData {
     
 }
 
-@_functionBuilder
+@resultBuilder
 public struct FormDataBuilder {
     
     public static func buildBlock(_ formData: PartialFormData...) -> PartialFormData {
