@@ -181,7 +181,11 @@ extension Body {
             }
             
             func formPart(name: String, value: Data?, file: URL?, contentType: String?, transferEncoding: String?) -> Data {
-                var metadata = ["Content-Disposition: form-data; name=\"\(name)\""]
+                var disposition = "Content-Disposition: form-data; name=\"\(name)\""
+                if let filename = file?.lastPathComponent {
+                    disposition += "; filename=\"\(filename)\""
+                }
+                var metadata = [disposition]
                 if let contentType = contentType {
                     metadata.append("Content-Type: \(contentType)")
                 }

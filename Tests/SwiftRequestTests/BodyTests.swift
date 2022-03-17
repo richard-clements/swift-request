@@ -85,7 +85,7 @@ class BodyTests: XCTestCase {
         }
         let body = Body(builder: { multipartForm })
         var expectedData = """
-        --Boundary12345\r\nContent-Disposition: form-data; name="file"\r\nContent-Type: application/number\r\nContent-Transfer-Encoding: Int\r\n\r\n
+        --Boundary12345\r\nContent-Disposition: form-data; name="file"; filename="testdata.data"\r\nContent-Type: application/number\r\nContent-Transfer-Encoding: Int\r\n\r\n
         """.data(using: .utf8)
         expectedData?.append(data)
         expectedData?.append("\r\n--Boundary12345--\r\n".data(using: .utf8) ?? Data())
