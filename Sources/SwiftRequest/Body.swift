@@ -153,13 +153,22 @@ extension MultipartForm {
 public struct Json<T: Encodable> {
     
     let data: T
+    var encoder: JSONEncoder
     
     public init(_ object: T) {
         self.data = object
+        self.encoder = JSONEncoder()
     }
     
     public init(_ builder: () -> T) {
         self.data = builder()
+        self.encoder = JSONEncoder()
+    }
+    
+    public func using(encoder: JSONEncoder) -> Json {
+        var json = self
+        json.encoder = encoder
+        return json
     }
     
 }
@@ -214,10 +223,16 @@ extension Body {
     public init<T: Encodable>(builder: () -> Json<T>) {
         let component = builder()
         self.init { (args: String...) in
-            try! JSONEncoder().encode(component.data)
+            try! component.encoder.encode(component.data)
         }
     }
     
+    public init(builder: () -> ([String]) throws -> Data?) {
+        let component = builder()
+        self.init { (args: String...) in
+            try? component(args)
+        }
+    }
 }
 
 extension Body: PartialRequest {

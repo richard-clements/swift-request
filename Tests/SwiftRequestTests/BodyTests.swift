@@ -38,6 +38,36 @@ class BodyTests: XCTestCase {
         XCTAssertNil(body.networkServiceType)
     }
     
+    func testInitJson_WithEncoder() {
+        struct JsonObject: Encodable {
+            let valueString: String
+        }
+        
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        
+        let jsonObject = JsonObject(valueString: "valueString")
+        let body = Body(builder: { Json(jsonObject).using(encoder: encoder) })
+        XCTAssertEqual(body.body?.dataFunction(), try! JSONSerialization.data(withJSONObject: ["value_string": "valueString"], options: []))
+        XCTAssertNil(body.url)
+        XCTAssertNil(body.scheme)
+        XCTAssertNil(body.host)
+        XCTAssertNil(body.port)
+        XCTAssertNil(body.path)
+        XCTAssertNil(body.method)
+        XCTAssertNil(body.cachePolicy)
+        XCTAssertNil(body.timeoutInterval)
+        XCTAssertNil(body.query)
+        XCTAssertNil(body.headers)
+        XCTAssertNil(body.bodyStream)
+        XCTAssertNil(body.httpShouldHandleCookies)
+        XCTAssertNil(body.httpShouldUsePipelining)
+        XCTAssertNil(body.allowsCellularAccess)
+        XCTAssertNil(body.allowsConstrainedNetworkAccess)
+        XCTAssertNil(body.allowsExpensiveNetworkAccess)
+        XCTAssertNil(body.networkServiceType)
+    }
+    
     func testInitMultipart() {
         let multipartForm = MultipartForm {
             MultipartFormData(name: "name1", value: "Value 1", contentType: "application/content1", transferEncoding: "transfer-encoding1")
@@ -138,14 +168,32 @@ class BodyTests: XCTestCase {
         --Boundary12345\r\nContent-Disposition: form-data; name="name1"\r\n\r\nValue 1\r\n--Boundary12345--\r\n
         """)
     }
+    
+    func testCustomBody() {
+        let jsonObject: [String: Any] = [
+            "value_string": "string",
+            "value_int": 1
+        ]
+        let dataFunction = { (_: [String]) in
+            try JSONSerialization.data(withJSONObject: jsonObject, options: [])
+        }
+        let body = Body(builder: { dataFunction })
+        let returnedData = body.dataFunction("Boundary12345").flatMap {
+            try? JSONSerialization.jsonObject(with: $0, options: [])
+        } as? [String: Any]
+        XCTAssertEqual(returnedData?["value_string"] as? String, "string")
+        XCTAssertEqual(returnedData?["value_int"] as? Int, 1)
+    }
 }
 
 extension BodyTests {
     
     static var nonConstrainedTests = [
         ("testInitJson", testInitJson),
+        ("testInitJson_WithEncoder", testInitJson_WithEncoder),
         ("testInitMultipart", testInitMultipart),
-        ("testMultipartEither", testMultipartEither)
+        ("testMultipartEither", testMultipartEither),
+        ("testCustomBody", testCustomBody)
     ]
     
     static var constrainedTests: [(String, (BodyTests) -> () -> ())] {
