@@ -298,6 +298,7 @@ extension QueryTests {
     static var allTests = [
         ("testInit", testInit),
         ("testInitQueries", testInitQueries),
+        ("testInitQuery_NoValue_StringName", testInitQuery_NoValue_StringName),
         ("testIf", testIf),
         ("testCsvQuery_NameValues", testCsvQuery_NameValues),
         ("testCsvQuery_NameStrings", testCsvQuery_NameStrings),
