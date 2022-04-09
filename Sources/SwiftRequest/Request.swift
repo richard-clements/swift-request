@@ -17,7 +17,7 @@ extension URLRequest {
         }
         components.port = builtRequest.port
         components.path = builtRequest.path ?? ""
-        components.queryItems = builtRequest.query?.map { URLQueryItem(name: $0.name.rawValue, value: $0.value.rawValue) }
+        components.queryItems = builtRequest.query?.map { URLQueryItem(name: $0.name.rawValue, value: $0.value?.rawValue) }
         let boundary = UUID().uuidString
         var request = URLRequest(url: components.url!)
         request.httpMethod = builtRequest.method

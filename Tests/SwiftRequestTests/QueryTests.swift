@@ -94,6 +94,32 @@ class QueryTests: XCTestCase {
         XCTAssertNil(query.networkServiceType)
     }
     
+    func testInitQuery_NoValue_StringName() {
+        let queries = Queries {
+            Query(name: "Name")
+        }
+        XCTAssertEqual(queries.query?.first?.name, "Name")
+        XCTAssertNil(queries.query?.first?.value)
+        XCTAssertNil(queries.url)
+        XCTAssertNil(queries.scheme)
+        XCTAssertNil(queries.host)
+        XCTAssertNil(queries.port)
+        XCTAssertNil(queries.path)
+        XCTAssertNil(queries.method)
+        XCTAssertNil(queries.cachePolicy)
+        XCTAssertNil(queries.timeoutInterval)
+        XCTAssertNil(queries.headers)
+        XCTAssertNil(queries.cachePolicy)
+        XCTAssertNil(queries.body)
+        XCTAssertNil(queries.bodyStream)
+        XCTAssertNil(queries.httpShouldHandleCookies)
+        XCTAssertNil(queries.httpShouldUsePipelining)
+        XCTAssertNil(queries.allowsCellularAccess)
+        XCTAssertNil(queries.allowsConstrainedNetworkAccess)
+        XCTAssertNil(queries.allowsExpensiveNetworkAccess)
+        XCTAssertNil(queries.networkServiceType)
+    }
+    
     func testInitQueries() {
         let queries = Queries {
             Query(name: "Name", value: "Value")

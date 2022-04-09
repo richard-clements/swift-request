@@ -30,9 +30,9 @@ public struct Query: Equatable {
     }
     
     let name: Name
-    let value: Value
+    let value: Value?
     
-    public init(name: Name, value: Value) {
+    public init(name: Name, value: Value?) {
         self.name = name
         self.value = value
     }
@@ -40,16 +40,24 @@ public struct Query: Equatable {
 
 extension Query {
     
-    public init(name: String, value: String) {
-        self.init(name: Name(name), value: Value(value))
+    public init(name: String, value: String?) {
+        self.init(name: Name(name), value: value.map { Value($0) })
     }
     
-    public init(name: Name, value: String) {
-        self.init(name: name, value: Value(value))
+    public init(name: Name, value: String?) {
+        self.init(name: name, value: value.map { Value($0) })
     }
     
-    public init(name: String, value: Value) {
+    public init(name: String, value: Value?) {
         self.init(name: Name(name), value: value)
+    }
+    
+    public init(name: String) {
+        self.init(name: Name(name), value: Optional<Value>.none)
+    }
+    
+    public init(name: Name) {
+        self.init(name: name, value: Optional<Value>.none)
     }
     
 }
